@@ -1,0 +1,116 @@
+@startuml
+
+Actividad "0..n" <--* "n " Proyecto
+Actividad <|-- Proyecto : hereda
+Actividad <|-- Tarea : hereda
+Tarea "1" <-- "1..n" Intervalo : dependencia >
+Actividad "0..n" -- "0..n" Tag
+Actividad "0..n" -- "0..n" TotalTime
+
+Abstract Actividad {
+-actNombre
+-actLdtFechaInicial
+-actLdtFechaFinal
+-actFechaInicial
+-actFechaFinal
+-actTiempoTotal
+-actProyectoSuperior
+-actClase
+-logger
+-ttTiempoTotal
+
+#actInvariant()
++getNombre()
++getLdtFechaInicial()
++getFechaInicial()
++getFechaFinal()
++getTiempoTotal()
++getProyectoSuperior()
++getTtTiempoTotal()
++getTtTotalTime(ini, fin)
++setFechaInicial(start)
++setFechaFinal(finish)
++setTiempoTotal()
++sumaTtTiempoTotal(valor)
++actMostrar()
++getJson()
+}
+
+Abstract Proyecto {
+-proListaTareas
+-proListaProyectos
+-logger
+
++anadirTarea(task)
++anadirProyecto(proyect)
++setTiempoTotal()
++getTtTotalTime()
++getJson()
+}
+
+Class Tarea {
+-tarListaIntervalos
+-tarReloj
+-logger
+
+#tarInvariant()
++tarGetinstance()
++getTtTotalTime()
++setTiempoTotal()
++anadirIntervalo(interval)
++start()
++stop()
++getJson()
+}
+
+Class Intervalo {
+-intLdtFechaInicial
+-intLdtFechaFinal
+-intFechaInicial
+-intFechaFinal
+-intTiempoTotal
+-intTareaSuperior
+-intClase
+-logger
+
+#intInvariant()
++intGetTiempoTotal()
++getFechaInicial()
++getFechaFinal()
++intSetFechaFinal(finish)
++intSetTiempoTotal()
++intMostrar()
++getJson()
++update()
+}
+
+Class Tag{
+-tagList
+-actList
+-logger
+
+#tagInvariant()
++anadirTag()
++searchTag()
+}
+Class TotalTime {
+-ttLdtTiempoInicial;
+-ttLdtTiempoFinal;
+-ttRoot;
+
+#ttInvariant()
++getTtTotalTime(Actividad, ini, fin)
++getTtTotalTime(Actividad)
+}
+
+Class Reloj {
+-periodo
+-uniqueinstance
+-logger
+
++getInstance()
++notificar()
++run()
+}
+
+@enduml
